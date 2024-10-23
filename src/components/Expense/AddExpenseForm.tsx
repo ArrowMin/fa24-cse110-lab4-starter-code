@@ -4,6 +4,7 @@ import { Expense } from "../../types/types";
 const AddExpenseForm = () => {
   // Exercise: Consume the AppContext here
   const { expenses, setExpenses } = useContext(AppContext);
+  const budget = useContext(AppContext);
   // Exercise: Create name and cost to state variables
   const [name, setName] = useState("");
   const [cost, setCost] = useState(0);

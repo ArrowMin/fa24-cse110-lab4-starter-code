@@ -14,7 +14,7 @@ describe ("Inital", () =>{
     expect(budget).toBeInTheDocument();
     expect(remaining).toBeInTheDocument();
     expect(spent).toBeInTheDocument();
-    expect(spent).not.toBeInTheDocument();
+    expect(spent).toBeInTheDocument();
   });
 });
 

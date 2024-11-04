@@ -13,29 +13,24 @@ export function createExpenseServer(req: Request, res: Response, expenses: Expen
         description,
         cost,
     };
-
     expenses.push(newExpense);
     res.status(201).send(newExpense);
 }
 
 export function deleteExpense(req: Request, res: Response, expenses: Expense[]) {
     // TO DO: Implement deleteExpense function
-    const { id, cost, description } = req.body;
+    const expenseId = req.params.id;
 
-    if (!description || !id || !cost) {
-        return res.status(400).send({ error: "Missing required fields" });
-    }
+    expenses = expenses.filter(
+      (expense) => expense.id !== expenseId
+    );
 
-   expenses.slice(id);
+    res.status(201).send({"data": expenses});
 }
+
 
 
 export function getExpenses(req: Request, res: Response, expenses: Expense[]) {
     res.status(200).send({ "data": expenses });
 }
 
-// Function to update the budget
-export function updateBudget(res: Response, body: any, budget: { amount: number }) 
-{
-	// TO DO: Implement updateBudget function
-}

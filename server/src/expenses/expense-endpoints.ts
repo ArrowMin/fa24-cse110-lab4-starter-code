@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 export function createExpenseEndpoints(app: any, expenses: any) {
     // Create a new expense
     app.post("/expenses", (req: Request, res: Response) => {
-
+        console.log("hi");
         createExpenseServer(req, res, expenses);
 
     });

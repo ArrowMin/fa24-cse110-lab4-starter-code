@@ -13,6 +13,7 @@ export const createExpense = async (expense: Expense): Promise<Expense> => {
 	if (!response.ok) {
     	throw new Error("Failed to create expense");
 	}
+	console.log("create expense");
 	return response.json();
 };
 
@@ -25,6 +26,8 @@ export const deleteExpense = async (id: string): Promise<void> => {
 	if (!response.ok) {
     	throw new Error("Failed to delete expense");
 	}
+	
+	console.log("delete expense");
 };
 
 // Function to get all expenses from the backend. Method: GET

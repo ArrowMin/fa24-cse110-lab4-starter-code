@@ -1,33 +1,35 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppContext";
-import { fetchBudget } from "../../utils/budget-utils";
+import { fetchBudget, updateBudget } from "../../utils/budget-utils";
 
 const Budget = () => {
-  const { budget } = useContext(AppContext);
+  let { budget } = useContext(AppContext);
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(budget);
+
   useEffect(() => {
 	  loadBudget();
     }, []);
     // Function to load budget and handle errors
   const loadBudget = async () => {
 	try {
-  	const budget = await fetchBudget();
-    setInputValue(budget);
+  	const serverBudget = await fetchBudget();
+    budget = serverBudget;
 	} catch (err: any) {
   	console.log(err.message);
 	}
-};
 
+};
   const handleEditClick = (event: any) => {
     setIsEditing(true);
-    setInputValue(event.target.value);
+    budget = event.target.value;
+    updateBudget(budget);
+    setInputValue(budget);
   };
 
   const handleSaveClick = () => {
     setIsEditing(false);
   };
-
 
   return (
     <div className="alert alert-secondary p-3 d-flex align-items-center justify-content-between">

@@ -5,23 +5,22 @@ import { Expense } from "../../types/types";
 import { fetchExpenses } from "../../utils/expense-utils";
 
 const ExpenseList = () => {
-  const { expenses,setExpenses } = useContext(AppContext);
+  const { expenses, setExpenses } = useContext(AppContext);
   // Fetch expenses on component mount
   useEffect(() => {
-	loadExpenses();
+    loadExpenses();
   }, []);
 
   // Function to load expenses and handle errors
   const loadExpenses = async () => {
-	try {
-  	const expenseList = await fetchExpenses();
-  	setExpenses(expenseList);
-	} catch (err: any) {
-  	console.log(err.message);
-	}
-};
+    try {
+      const expenseList = await fetchExpenses();
+      setExpenses(expenseList);
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
   return (
-    
     <ul className="list-group">
       {expenses.map((expense: Expense) => (
         <ExpenseItem

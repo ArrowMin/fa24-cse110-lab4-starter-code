@@ -8,18 +8,17 @@ const Budget = () => {
   const [inputValue, setInputValue] = useState(budget);
 
   useEffect(() => {
-	  loadBudget();
-    }, []);
-    // Function to load budget and handle errors
+    loadBudget();
+  }, []);
+  // Function to load budget and handle errors
   const loadBudget = async () => {
-	try {
-  	const serverBudget = await fetchBudget();
-    budget = serverBudget;
-	} catch (err: any) {
-  	console.log(err.message);
-	}
-
-};
+    try {
+      const serverBudget = await fetchBudget();
+      budget = serverBudget;
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
   const handleEditClick = (event: any) => {
     setIsEditing(true);
     budget = event.target.value;
@@ -35,14 +34,14 @@ const Budget = () => {
     <div className="alert alert-secondary p-3 d-flex align-items-center justify-content-between">
       <div data-testid="budget">
         {isEditing ? (
-        <input type="number" value={inputValue} onChange={handleEditClick} />
-      ) : ( 
-        <>
-        Budget: ${inputValue}
-        <button onClick={() => setIsEditing(true)}>Edit</button>
-        </>
-      )}
-      {isEditing && <button onClick={handleSaveClick}>Save</button>}
+          <input type="number" value={inputValue} onChange={handleEditClick} />
+        ) : (
+          <>
+            Budget: ${inputValue}
+            <button onClick={() => setIsEditing(true)}>Edit</button>
+          </>
+        )}
+        {isEditing && <button onClick={handleSaveClick}>Save</button>}
       </div>
     </div>
   );

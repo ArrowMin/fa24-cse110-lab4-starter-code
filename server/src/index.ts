@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { createBudgetEndpoints } from "./budget/budget-endpoints";
-import { budget, expenses } from "./constants";
 import { createExpenseEndpoints } from "./expenses/expense-endpoints";
+import { budget } from "./constants";
+import initDB from "./createTable";
 
 const express = require("express");
 const cors = require("cors");
@@ -17,11 +18,17 @@ app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 
-// Root endpoint to get test if the server is running
-app.get("/", (req: Request, res: Response) => {
-  res.send({ "data": "Hello, TypeScript Express!" });
-  res.status(200);
-});
+// Initialize the database and start the server
+(async () => {
+  const db = await initDB();
 
-createExpenseEndpoints(app, expenses);
-createBudgetEndpoints(app, budget);
+  // Root endpoint to get test if the server is running
+  app.get("/", (res: Response) => {
+    res.send({ data: "Hello, TypeScript Express!" });
+    res.status(200);
+  });
+
+  createExpenseEndpoints(app, db);
+
+  createBudgetEndpoints(app, budget);
+})();

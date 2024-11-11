@@ -1,10 +1,11 @@
+import { Database } from "sqlite";
 import { Expense } from "../types";
 import { Request, Response } from "express";
 
-export function createExpenseServer(
+export async function createExpenseServer(
   req: Request,
   res: Response,
-  expenses: Expense[]
+  db: Database
 ) {
   const { id, cost, description } = req.body;
 
@@ -12,13 +13,18 @@ export function createExpenseServer(
     return res.status(400).send({ error: "Missing required fields" });
   }
 
-  const newExpense: Expense = {
-    id: id,
-    description,
-    cost,
-  };
-  expenses.push(newExpense);
-  res.status(201).send(newExpense);
+  try {
+    await db.run(
+      "INSERT INTO expenses (id, description, cost) VALUES (?, ?, ?);",
+      [id, description, cost]
+    );
+  } catch (error) {
+    return res
+      .status(400)
+      .send({ error: `Expense could not be created, + ${error}` });
+  }
+
+  res.status(201).send({ id, description, cost });
 }
 
 export function deleteExpense(
